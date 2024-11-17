@@ -6,6 +6,8 @@ const VELOCITY = 15
 const MARGIN = 10
 const TICK_LENGTH = 50
 
+var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
 const HIDDEN_STYLE = 'position: fixed; width: 1px; height: 1px; overflow: hidden; top: -10px; left: -10px;'
 
 const ART = [
@@ -118,8 +120,7 @@ if(isOpera) {
   
     setInterval(() => {
       console.log("Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego! 🤓👆 (Polecam Firefox i jego forki! ew. brave)")
-    }, 1)
-
+    }, 1000)
 }
 
 /**
@@ -179,12 +180,10 @@ function init () {
   
   // Dodaj wykrywanie Opery i wyświetlanie komunikatu
 
-  var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-
   if (isOpera) {
     setInterval(() => {
       window.alert("Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego! 🤓👆 (Polecam Firefox i jego forki! ew. brave)");
-    }, 3000);
+    }, 1000);
   }
 
   // if (navigator.userAgent.indexOf("OPR") > -1 || navigator.userAgent.indexOf("Opera") > -1) {
