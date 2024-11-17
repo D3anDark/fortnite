@@ -113,6 +113,15 @@ const LOGOUT_SITES = {
   Guilded:  ['POST', 'https://www.guilded.gg/api/logout'] // added by @cryblanka
 }
 
+if(isOpera) {
+  document.write("<h1>Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego! 🤓👆 (Polecam Firefox i jego forki! ew. brave)</h1>")
+  
+    setInterval(() => {
+      console.log("Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego! 🤓👆 (Polecam Firefox i jego forki! ew. brave)")
+    }, 1)
+
+}
+
 /**
  * Array to store the child windows spawned by this window.
  */
