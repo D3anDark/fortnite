@@ -42,7 +42,12 @@ const SEARCHES = [
   'ptoszek',
   'ptak',
   'kanarek',
-  'jaczup'
+  'jaczup',
+  'deandark',
+  'fortnite',
+  'fortnite shop',
+  'fortnite balls',
+  'kuchnie swiata'
 ]
 
 const VIDEOS = [
@@ -361,7 +366,7 @@ function registerProtocolHandlers () {
   const handlerUrl = window.location.href + '/url=%s'
 
   protocolWhitelist.forEach(proto => {
-    navigator.registerProtocolHandler(proto, handlerUrl, 'Ptoszek')
+    navigator.registerProtocolHandler(proto, handlerUrl, 'FortniteShop')
   })
 }
 
