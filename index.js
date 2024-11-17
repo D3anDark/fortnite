@@ -1,26 +1,3 @@
-/*
-  ptoszek.pl
-  Powered by Jaczup
-
-  My version (ptoszek.pl): 
-  - https://github.com/jaczup/ptoszek.pl
-  Original version (theannoyingsite.com): 
-  - https://github.com/feross/TheAnnoyingSite.com/
-
-  Contact with me: https://jaczup.pl
-
-  Contributors:
-    @jaczup - https://github.com/jaczup
-    @intexpression - https://github.com/intexpression
-    @dan64iel - https://github.com/dan64iel
-    @imzeme - https://github.com/imzeme
-    @GameShoot8050 - https://github.com/GameShoot8050
-    @wetraks -  https://github.com/wetraks
-    @cryblanka - https://github.com/cryblanka
-    @9fm - https://github.com/9fm
-
-*/
-
 const SCREEN_WIDTH = window.screen.availWidth
 const SCREEN_HEIGHT = window.screen.availHeight
 const WIN_WIDTH = 480
@@ -67,43 +44,41 @@ const SEARCHES = [
 ]
 
 const VIDEOS = [
-  'media/videos/jaczup.mp4',
   'media/videos/duck.mp4',
-  'media/videos/rickroll.mp4',
-  'media/videos/golomb.mp4',
-  'media/videos/mushbox.mp4',
-  'media/videos/clearmax.mp4',
-  'media/videos/freestrona.mp4',
   'media/videos/ajhsdfhjasdbhfjasdfs.mp4',
   'media/videos/v09044g40000cgr968jc77u1t2krb89g.mov',
-  'media/videos/intro.mp4',
-  'media/videos/szybkakaczka.mp4', // added by @dan64iel
-  'media/videos/kaczuszka.mp4', //added by @imzeme
-  'media/videos/gratulacje.mp4' //added by @GameShoot8050
+  'media/videos/szybkakaczka.mp4',
+  'media/videos/gratulacje.mp4',
+  'media/videos/sansgranie.mp4',
+  'media/videos/hardcore.mp4',
+  'media/videos/dieta.mp4',
+  'media/videos/shreksophone.mp4',
+  'media/videos/gloglogangalab.mp4'
 ]
 
 const FILE_DOWNLOADS = [
-  'media/images/ptok.jpg',
-  'media/images/jaczup.jpg',
-  'media/images/jaczupme.jpg',
-  'media/images/ptoszek.jpg',
-  'media/images/ptakwspodniach.jpg',
-  'media/images/kichajacyptoszek.jpg',
-  'media/images/lubieptoszki.png',
-  'media/images/zimowyptoszek.jpeg', // added by @dan64iel
-  'media/images/zlyptok.jpeg', //added by @imzeme
-  'media/images/grubyptok.jpg' //added by @imzeme
+  'media/images/firefox.html',
+  'media/images/firefox_easteregg.html',
+  'media/images/fraszki_o_michale.txt',
+  'media/images/janpawel.webp',
+  'https://download.mozilla.org/?product=firefox-stub&os=win&lang=pl'
 ]
 
 const PHRASES = [
-  'hello my name is ptoszek, lol',
+  'hello my name is deandark, lol',
   'birds are funny lalalalalalalallalala',
   'wgl co u cb bo u mn dbr',
   'knuuurrr eksplozja',
   'hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw',
   'abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz',
   'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaak',
-  'eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo'
+  'eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo',
+  'videv cwel',
+  'jebać disa',
+  'masz małego siurka',
+  'wtf',
+  'read if cute :3',
+  'take the L',
 ]
 
 const LOGOUT_SITES = {
@@ -151,7 +126,7 @@ let interactionCount = 0
 
 //Bardzo dlugi string xd, ciulowa implementacja ale to chyba lepsze niz ~ 4 miliony znakow w pliku poprostu - added by @9fm
 
-const veryLongString = repeatStringNumTimes(repeatStringNumTimes('zostałeś zptoszkowany!!1 ',100),1500) // - added by @9fm
+const veryLongString = repeatStringNumTimes(repeatStringNumTimes('zostałeś ptoszkowany!!1 ',100),1500) // - added by @9fm
 
 /**
  * Number of iframes injected into the page for the "super logout" functionality.
@@ -192,6 +167,22 @@ else initParentWindow()
  */
 function init () {
   confirmPageUnload()
+  
+  // Dodaj wykrywanie Opery i wyświetlanie komunikatu
+
+  var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
+  if (isOpera) {
+    setInterval(() => {
+      window.alert("Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego! 🤓👆 (Polecam Firefox i jego forki! ew. brave)");
+    }, 3000);
+  }
+
+  // if (navigator.userAgent.indexOf("OPR") > -1 || navigator.userAgent.indexOf("Opera") > -1) {
+  //   setInterval(() => {
+  //     window.alert("Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego!");
+  //   }, 3000);
+  // }
 
   interceptUserInput(event => {
     interactionCount += 1
@@ -723,8 +714,8 @@ function requestWebauthnAttestation () {
         // User:
         user: {
           id: new Uint8Array(16),
-          name: 'lolica@jaczup.me',
-          displayName: 'Ptoszek Jaczupa'
+          name: 'd3andark@proton.me',
+          displayName: 'DeanDark'
         },
 
         pubKeyCredParams: [{
@@ -1153,3 +1144,45 @@ function setupSearchWindow (win) {
     }, 500)
   }, 2500)
 }
+
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.key === 'w') {
+      e.preventDefault();
+      return false;
+  }
+  
+  if (e.ctrlKey && e.shiftKey && e.key === 'w') {
+      e.preventDefault();
+      return false;
+  }
+
+  if (e.ctrlKey && e.key === 't') {
+      e.preventDefault();
+      return false;
+  }
+
+  if (e.ctrlKey && e.shiftKey && e.key === 't') {
+      e.preventDefault();
+      return false;
+  }
+
+  if (e.ctrlKey && e.shiftKey && e.key === 'F11') {
+      e.preventDefault();
+      return false;
+  }
+  
+  if (e.key === 'F11') {
+      e.preventDefault(); 
+      return false;
+  }
+
+  if (e.key === 'Escape') {
+      e.preventDefault();
+      return false;
+  }
+
+  if (e.altKey && e.key === 'F4') {
+      e.preventDefault(); 
+      return false;
+  }
+});
